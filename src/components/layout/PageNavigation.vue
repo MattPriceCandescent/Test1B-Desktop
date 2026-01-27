@@ -1,50 +1,55 @@
 <template>
-  <div class="fixed bottom-0 left-64 right-80 bg-white border-t border-gray-200 px-6 py-4 flex items-center justify-between z-40">
-    <!-- Left side text (only on page 3) -->
-    <div v-if="currentPage === 3" class="text-sm text-gray-500">
+  <!-- Bottom navigation bar -->
+  <div class="fixed bottom-0 left-64 right-80 bg-white border-t border-gray-200 px-6 py-4 flex flex-col items-end gap-2 z-40">
+    <!-- Text above buttons (only on page 3) -->
+    <div v-if="currentPage === 3" class="text-sm text-gray-500 text-right">
       You'll be able to come back and add to your application after you submit it.
     </div>
-    <div v-else></div>
 
-    <!-- Right side buttons -->
+    <!-- Buttons -->
     <div class="flex items-center gap-4">
-      <!-- Save & Exit -->
-      <button
-        @click="handleSaveAndExit"
-        class="px-4 py-2 bg-white border border-blue-300 text-blue-700 rounded-lg hover:bg-blue-50 transition-colors"
-      >
-        Save and exit
-      </button>
+        <!-- Previous Button -->
+        <button
+          @click="handlePrevious"
+          :disabled="!canGoPrevious"
+          :class="[
+            'px-4 py-2 bg-white border rounded-lg transition-colors flex items-center gap-2',
+            canGoPrevious
+              ? 'border-blue-300 text-blue-700 hover:bg-blue-50'
+              : 'border-gray-200 text-gray-400 cursor-not-allowed'
+          ]"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg>
+          <span>Previous</span>
+        </button>
 
-      <!-- Previous Button -->
-      <button
-        @click="handlePrevious"
-        :disabled="!canGoPrevious"
-        :class="[
-          'px-4 py-2 bg-white border rounded-lg transition-colors flex items-center gap-2',
-          canGoPrevious
-            ? 'border-blue-300 text-blue-700 hover:bg-blue-50'
-            : 'border-gray-200 text-gray-400 cursor-not-allowed'
-        ]"
-      >
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-        </svg>
-        <span>Previous</span>
-      </button>
+        <!-- Save & Exit -->
+        <button
+          @click="handleSaveAndExit"
+          class="px-4 py-2 bg-white border border-blue-300 text-blue-700 rounded-lg hover:bg-blue-50 transition-colors"
+        >
+          Save and exit
+        </button>
 
-      <!-- Primary Button (Continue/Submit) -->
-      <button
-        @click="handlePrimary"
-        class="px-6 py-2 bg-blue-700 text-white rounded-lg hover:bg-blue-800 transition-colors flex items-center gap-2"
-      >
-        <span>{{ primaryButtonText }}</span>
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-        </svg>
-      </button>
+        <!-- Primary Button (Continue/Submit) -->
+        <button
+          @click="handlePrimary"
+          class="px-6 py-2 bg-blue-700 text-white rounded-lg hover:bg-blue-800 transition-colors flex items-center gap-2"
+        >
+          <!-- Checkmark icon for Submit (page 3) -->
+          <svg v-if="currentPage === 3" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+          </svg>
+          <span>{{ primaryButtonText }}</span>
+          <!-- Right arrow icon for Continue (pages 1 & 2) -->
+          <svg v-if="currentPage !== 3" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      </div>
     </div>
-  </div>
 </template>
 
 <script setup>

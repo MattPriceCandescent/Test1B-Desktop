@@ -32,15 +32,18 @@
             >
               <!-- Checkmark for 100% complete pages -->
               <svg 
-                v-if="page.completionPercentage === 100 && !page.isActive" 
-                class="w-5 h-5 text-blue-600" 
+                v-if="page.completionPercentage === 100" 
+                :class="[
+                  'w-5 h-5',
+                  page.isActive ? 'text-white' : 'text-gray-600'
+                ]" 
                 fill="none" 
                 stroke="currentColor" 
                 viewBox="0 0 24 24"
               >
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
               </svg>
-              <!-- Number for active or incomplete pages -->
+              <!-- Number for incomplete pages -->
               <span v-else>{{ index + 1 }}</span>
             </div>
             <button
@@ -54,24 +57,28 @@
             </button>
           </div>
 
-          <!-- Form blocks (only visible for active page) -->
-          <div v-if="page.isActive && page.blocks.length > 0" class="ml-11 mt-2 space-y-4">
-            <div
-              v-for="block in page.blocks"
-              :key="block.id"
-              class="mb-3"
+          <!-- Single progress bar per page, always visible -->
+          <div class="ml-11 mt-2">
+            <!-- When 100% complete: solid line -->
+            <div 
+              v-if="page.completionPercentage === 100"
+              :class="[
+                'w-full h-1 rounded-full',
+                page.isActive ? 'bg-blue-600' : 'bg-gray-500'
+              ]"
+            ></div>
+            <!-- When < 100%: progress bar with fill -->
+            <div 
+              v-else
+              class="w-full bg-gray-200 rounded-full h-1"
             >
-              <div class="flex items-center justify-between mb-1">
-                <span class="text-sm text-gray-500">{{ block.title }}</span>
-                <span class="text-xs text-gray-500">{{ block.progress }}%</span>
-              </div>
-              <!-- Progress bar -->
-              <div class="w-full bg-gray-200 rounded-full h-1">
-                <div
-                  class="bg-blue-600 h-1 rounded-full transition-all duration-300"
-                  :style="{ width: `${block.progress}%` }"
-                ></div>
-              </div>
+              <div
+                :class="[
+                  'h-1 rounded-full transition-all duration-300',
+                  page.isActive ? 'bg-blue-600' : 'bg-gray-500'
+                ]"
+                :style="{ width: `${page.completionPercentage}%` }"
+              ></div>
             </div>
           </div>
         </div>
