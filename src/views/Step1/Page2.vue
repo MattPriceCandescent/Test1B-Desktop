@@ -4,7 +4,7 @@
     <div class="flex">
       <LeftNav />
       <main class="flex-1 ml-64 mr-80 mt-16 mb-20 p-8">
-        <div class="max-w-4xl">
+        <div class="max-w-4xl mx-auto">
           <h1 class="text-3xl font-bold text-gray-800 mb-2">{{ pageData.title }}</h1>
           <p class="text-gray-600 mb-8">{{ pageData.subtitle }}</p>
 

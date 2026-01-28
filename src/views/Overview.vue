@@ -3,8 +3,8 @@
     <Header />
     <div class="flex">
       <LeftNav />
-      <main class="flex-1 ml-64 mr-80 mt-16 mb-20 p-8">
-        <div class="max-w-4xl">
+      <main class="flex-1 ml-64 mt-16 mb-20 p-8">
+        <div class="max-w-4xl mx-auto">
           <h1 class="text-3xl font-bold text-gray-800 mb-2">Marketplace Onboarding</h1>
           <p class="text-gray-600 mb-8">
             Complete the three-step marketplace onboarding process to get your solution listed. Each step requires approval before proceeding.
